@@ -49,7 +49,6 @@ bgcolor = "black"
 fgcolor = "white"
 
 divine = -1
-#nextblazespawn = -1
 
 # ceate window
 window = Tk()
@@ -106,6 +105,25 @@ labelResultOverworldDist.bind("<Button-1>", lambda e:clipboard.copy(labelResultO
 labelResultNetherVal.bind("<Button-1>",  lambda e:clipboard.copy(labelResultNetherVal.cget("text") + labelResultNetherDist.cget("text")))
 labelResultNetherDist.bind("<Button-1>",  lambda e:clipboard.copy(labelResultNetherVal.cget("text") + labelResultNetherDist.cget("text")))
 
+def reset():
+    global eye1, eye2, eyeCount
+    eye1 = []
+    eye2 = []
+    eyeCount = 0
+    labelEye1Val.configure(text="-")
+    labelEye2Val.configure(text="-")
+    labelResultNetherDist.configure(text="")
+    labelResultNetherVal.configure(text="")
+    labelResultOverworldDist.configure(text="")
+    labelResultOverworldVal.configure(text="")
+    labelDivineVal.config(text="")
+
+    for label in labelDivineCords:
+        label.configure(text="")
+
+    for label in labelDivineDistance:
+        label.configure(text="")
+
 def deleteEye(label):
     global eyeCount, eye1, eye2
     if eyeCount == 1 and label == labelEye1Val:
@@ -154,13 +172,9 @@ for i in range(3):
     labelDivineCords.append(lc)
     labelDivineDistance.append(ld)
 
-'''
-labelBlazeTimer = Label(frameDivine, text="Next Spawn in", bg=bgcolor, fg=fgcolor)
-labelBlazeTimer.place(x=0, y=50)
 
-labelBlazeTimerVal = Label(frameDivine, text="-", bg=bgcolor, fg="#dbbc60")
-labelBlazeTimerVal.place(x=80, y=50)
-'''
+buttonReset = Button(frameDivine, text="Reset", command = reset, bg="#222222", fg=fgcolor)
+buttonReset.place(x=0, y=60)
 
 # pack frames to window
 frameTriang.place(x=5, y=0)
@@ -232,27 +246,8 @@ while run:
                     for i in range(3):
                         labelDivineCords[i].configure(text="  X: {0:<5} Z: {1:<5}".format(divineTable[divine][i][0], divineTable[divine][i][1]))
 
-                '''
-                elif "spawner" in pars[4]:
-                    nbt = pars[4][18:-1].split(",")
-
-                    for n in nbt:
-                        if n[:5] == "Delay":
-                            print(n[6:-1])
-                            nextblazespawn = time.time() + float(n[6:-1]) / 20
-                '''
-
 
     window.update()
-
-    '''
-    if(time.time() > nextblazespawn):
-        nextblazespawn = -1
-        labelBlazeTimerVal.configure(text="-")
-
-    if nextblazespawn != -1:
-        labelBlazeTimerVal.configure(text="{0:.1f}s".format(nextblazespawn - time.time()))
-    '''    
 
     time.sleep(0.01)
 
