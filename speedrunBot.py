@@ -113,10 +113,10 @@ def reset():
     labelEye1Val.configure(text="-")
     labelEye2Val.configure(text="-")
     labelResultNetherDist.configure(text="")
-    labelResultNetherVal.configure(text="")
+    labelResultNetherVal.configure(text="-")
     labelResultOverworldDist.configure(text="")
-    labelResultOverworldVal.configure(text="")
-    labelDivineVal.config(text="")
+    labelResultOverworldVal.configure(text="-")
+    labelDivineVal.config(text="-")
 
     for label in labelDivineCords:
         label.configure(text="")
