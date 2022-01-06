@@ -5,6 +5,7 @@ import time
 from tkinter import *
 import math
 import ctypes
+import numpy
 
 # hide console
 ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
@@ -207,15 +208,33 @@ while run:
                         labelEye2Val.configure(text = "X: {0:<6} Z: {1:<6} | {2:.2f}°".format(int(float(eye2[0])), int(float(eye2[2])), ((float(eye2[3]) - 180) % 360 - 180)))
 
                     if(eyeCount == 2):
-                        # -> linagl code here
+                        
+                        
+                        pos1 = [float(eye1[2]), float(eye1[0])]
+                        ang1 = math.radians(float(eye1[3]))
 
-                        labelResultOverworldVal.configure(text="X: {0:<6} Z: {1:<6}".format("-x-", "-z-"))
-                        labelResultOverworldDist.configure(text="({0})".format("-d-"))
+                        #            z                  x
+                        pos2 = [float(eye2[2]), float(eye2[0])]
+                        ang2 = math.radians(float(eye2[3]))
 
-                        labelResultNetherVal.configure(text="X: {0:<6} Z: {1:<6}".format("-x-", "-z-"))
-                        labelResultNetherDist.configure(text="({0})".format("-d-"))
+                        #coefficient matrix
+                        mat = [[math.sin(ang1), math.cos(ang1)],[math.sin(ang2), math.cos(ang2)]]
 
-                        clipboard.copy("Nether X: {0} Z: {1} ({2})".format("-x-", "-z-", "-d-"))
+                        #vector
+                        vec = [ pos1[0] * math.sin(ang1) + pos1[1] * math.cos(ang1),
+                                pos2[0] * math.sin(ang2) + pos2[1] * math.cos(ang2)]
+
+                        #solve linear equation
+                        x = numpy.linalg.solve(mat, vec)
+                        
+
+                        labelResultOverworldVal.configure(text="X: {0:<6} Z: {1:<6}".format(int(x[1]), int(x[0])))
+                        labelResultOverworldDist.configure(text="({0})".format(int(math.dist(pos1, x))))
+
+                        labelResultNetherVal.configure(text="X: {0:<6} Z: {1:<6}".format(int(x[1] / 8), int(x[0] / 8)))
+                        labelResultNetherDist.configure(text="({0})".format(int(math.dist(pos1, x) / 8)))
+
+                        clipboard.copy("Nether X: {0} Z: {1} ({2})".format(int(x[1] / 8), int(x[0] / 8), int(math.dist(pos1, x) / 8)))
 
 
 
