@@ -7,6 +7,5 @@ Minecraft Speedrun Assist Tool
 - Divine distance check using F3 + C
 
 ## Dependencies
-[Clipboard](https://pypi.org/project/clipboard/)
-
-[Pynput](https://pypi.org/project/pynput/)
+- [Clipboard](https://pypi.org/project/clipboard/)
+- [Pynput](https://pypi.org/project/pynput/)
