@@ -4,12 +4,12 @@ import clipboard
 import time
 from tkinter import *
 import math
-import ctypes
-import numpy
+from ctypes import windll
+from numpy import linalg
 from pynput import keyboard
 
 # hide console
-ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
+windll.user32.ShowWindow(windll.kernel32.GetConsoleWindow(), 0)
 
 divineTable = [ [[251, 50],    [-169, 192],  [-82, -242]],
                 [[213, 142],   [-230, 113],  [17, -255]],
@@ -242,7 +242,7 @@ while run:
                                 pos2[0] * math.sin(ang2) + pos2[1] * math.cos(ang2)]
 
                         #solve linear equation
-                        x = numpy.linalg.solve(mat, vec)
+                        x = linalg.solve(mat, vec)
                         
 
                         labelResultOverworldVal.configure(text="X: {0:<6} Z: {1:<6}".format(int(x[1]), int(x[0])))
