@@ -6,6 +6,7 @@ from tkinter import *
 import math
 import ctypes
 import numpy
+from pynput import keyboard
 
 # hide console
 ctypes.windll.user32.ShowWindow(ctypes.windll.kernel32.GetConsoleWindow(), 0)
@@ -31,6 +32,7 @@ eyeCount = 0
 eye1 = []
 eye2 = []
 
+scheduleReset = False
 
 # --- GUI SETUP ---
 
@@ -39,11 +41,21 @@ run = True
 def test(*args):
     print(args)
 
-#end program
+# end program
 def end_program():
     window.destroy()
     global run 
     run = False
+
+# reset key listener
+def on_press(key):
+    global scheduleReset
+    if key == key.f5:
+        scheduleReset = True
+
+listener = keyboard.Listener(on_press=on_press)
+listener.start()
+
 
 # default colors
 bgcolor = "black"
@@ -107,6 +119,7 @@ labelResultNetherVal.bind("<Button-1>",  lambda e:clipboard.copy(labelResultNeth
 labelResultNetherDist.bind("<Button-1>",  lambda e:clipboard.copy(labelResultNetherVal.cget("text") + labelResultNetherDist.cget("text")))
 
 def reset():
+    print("reset")
     global eye1, eye2, eyeCount
     eye1 = []
     eye2 = []
@@ -187,6 +200,10 @@ frameDivine.place(x=225, y=0)
 cb = clipboard.paste()
 
 while run:
+    if scheduleReset:
+        reset()
+        scheduleReset = False
+
     # wait for clipboard to change
     if clipboard.paste() != cb:
         cb = clipboard.paste()
