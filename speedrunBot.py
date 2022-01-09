@@ -50,7 +50,7 @@ def end_program():
 # reset key listener
 def on_press(key):
     global scheduleReset
-    if key == key.f5:
+    if key == keyboard.Key.f5:
         scheduleReset = True
 
 listener = keyboard.Listener(on_press=on_press)
