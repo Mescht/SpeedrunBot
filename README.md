@@ -9,3 +9,4 @@ Minecraft Speedrun Assist Tool
 ## Dependencies
 - [Clipboard](https://pypi.org/project/clipboard/)
 - [Pynput](https://pypi.org/project/pynput/)
+- [Numpy](https://numpy.org/)
